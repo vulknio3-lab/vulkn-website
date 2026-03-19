@@ -80,6 +80,20 @@
     .fee-pct { font-family: 'Black Ops One', sans-serif; font-size: 40px; color: var(--orange); display: block; }
     .fee-name { font-size: 13px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 8px; display: block; }
     .fee-desc { font-size: 13px; color: var(--text-dim); margin-top: 8px; display: block; line-height: 1.5; }
+    .video-wrap { max-width: 800px; margin: 0 auto; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+    .video-wrap video { width: 100%; display: block; }
+    .volcano-section { text-align: center; }
+    .volcano-canvas-wrap { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+    .volcano-counter { font-family: 'Black Ops One', sans-serif; font-size: 36px; color: var(--orange); margin-bottom: 4px; }
+    .volcano-lbl { font-size: 12px; color: #fff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .btn-volcano { background: var(--orange); color: #000; border: none; padding: 18px 56px; font-family: 'Black Ops One', sans-serif; font-size: 16px; letter-spacing: 4px; border-radius: 4px; cursor: pointer; margin-bottom: 1.5rem; text-transform: uppercase; transition: background 0.2s; display: inline-block; }
+    .btn-volcano:hover { background: var(--orange-light); }
+    .btn-volcano:active { transform: scale(0.97); }
+    .volcano-progress-bg { max-width: 400px; margin: 0 auto 8px; background: #111; border-radius: 20px; height: 8px; overflow: hidden; }
+    .volcano-progress-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, #FF3300, #FF6B00, #FFB300); transition: width 0.3s; width: 0%; }
+    .volcano-stage { font-size: 12px; color: #fff; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px; min-height: 20px; }
+    .wp-btn { display: inline-block; margin-top: 24px; background: transparent; border: 1px solid var(--orange); color: var(--orange); padding: 14px 40px; font-family: 'Black Ops One', sans-serif; font-size: 14px; letter-spacing: 3px; border-radius: 4px; text-decoration: none; transition: background 0.2s, color 0.2s; }
+    .wp-btn:hover { background: var(--orange); color: #000; }
     footer { position: relative; z-index: 2; padding: 32px 24px; text-align: center; border-top: 1px solid #111; background: var(--black); }
     .footer-text { font-size: 12px; color: var(--text-dim); letter-spacing: 1px; }
     @media (max-width: 600px) {
@@ -98,10 +112,13 @@
     <a href="#tokenomics">Tokenomics</a>
     <a href="#roadmap">Roadmap</a>
     <a href="#fees">Fees</a>
+    <a href="#volcano">Volcano</a>
     <a href="https://t.me/VulknSOL" target="_blank">Telegram</a>
   </div>
 </nav>
 <div class="lava-bar"></div>
+
+<!-- HERO -->
 <section id="hero" style="border-top:none;">
   <div class="hero-logo">VULKN</div>
   <div class="hero-ticker">$VLK — SOLANA</div>
@@ -125,6 +142,20 @@
     <a href="https://t.me/VulknSOL" target="_blank" class="btn-social">TELEGRAM</a>
   </div>
 </section>
+
+<!-- VIDEO -->
+<section id="video">
+  <div class="container">
+    <div class="section-title">VULKN IN ACTION</div>
+    <div class="video-wrap">
+      <video controls muted loop playsinline>
+        <source src="IMG_7202.MP4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- TOKENOMICS -->
 <section id="tokenomics">
   <div class="container">
     <div class="section-title">TOKENOMICS</div>
@@ -136,39 +167,48 @@
         <span class="toko-detail">1 SOL = 1,500,000 $VLK</span>
       </div>
       <div class="toko-card">
-        <span class="toko-pct">75%</span>
+        <span class="toko-pct">69%</span>
         <span class="toko-name">Raydium Pool</span>
-        <span class="toko-tokens">750,000,000 $VLK</span>
+        <span class="toko-tokens">690,000,000 $VLK</span>
         <span class="toko-detail">Liquidity locked 2 years</span>
       </div>
       <div class="toko-card">
         <span class="toko-pct">5%</span>
         <span class="toko-name">Team</span>
         <span class="toko-tokens">50,000,000 $VLK</span>
-        <span class="toko-detail">2.5% @ 6M — 2.5% @ 12M</span>
+        <span class="toko-detail">Locked 1 year — unlocked @ 12M</span>
+      </div>
+      <div class="toko-card">
+        <span class="toko-pct">6%</span>
+        <span class="toko-name">Marketing</span>
+        <span class="toko-tokens">60,000,000 $VLK</span>
+        <span class="toko-detail">KOLs, airdrops, growth</span>
       </div>
       <div class="toko-card">
         <span class="toko-pct">5%</span>
-        <span class="toko-name">Marketing</span>
+        <span class="toko-name">Reserve</span>
         <span class="toko-tokens">50,000,000 $VLK</span>
-        <span class="toko-detail">KOLs, airdrops, growth</span>
+        <span class="toko-detail">Future burns & buybacks</span>
       </div>
     </div>
     <div class="vesting-timeline">
       <div class="vest-block"><span class="vest-month">LAUNCH</span><span class="vest-desc">Team tokens locked</span></div>
       <span class="vest-arrow">→</span>
-      <div class="vest-block"><span class="vest-month">MONTH 6</span><span class="vest-desc">25,000,000 unlocked</span></div>
-      <span class="vest-arrow">→</span>
-      <div class="vest-block"><span class="vest-month">MONTH 12</span><span class="vest-desc">25,000,000 unlocked</span></div>
+      <div class="vest-block"><span class="vest-month">MONTH 12</span><span class="vest-desc">50,000,000 unlocked</span></div>
+    </div>
+    <div style="text-align:center;">
+      <a href="VULKN_Whitepaper_v2.html" target="_blank" class="wp-btn">📄 READ WHITEPAPER</a>
     </div>
   </div>
 </section>
+
+<!-- FEES -->
 <section id="fees">
   <div class="container">
     <div class="section-title">TRANSACTION FEES</div>
     <div class="fees-grid">
       <div class="fee-card">
-        <span class="fee-pct">2%</span>
+        <span class="fee-pct">1%</span>
         <span class="fee-name">Team Fee</span>
         <span class="fee-desc">Applied on every transfer.<br/>Funds the team wallet automatically.</span>
       </div>
@@ -180,6 +220,8 @@
     </div>
   </div>
 </section>
+
+<!-- ROADMAP -->
 <section id="roadmap">
   <div class="container">
     <div class="section-title">ROADMAP</div>
@@ -203,36 +245,125 @@
     </div>
   </div>
 </section>
+
+<!-- VOLCANO -->
+<section id="volcano">
+  <div class="container volcano-section">
+    <div class="section-title">AWAKEN THE VOLCANO</div>
+    <div class="volcano-canvas-wrap">
+      <canvas id="fuji" width="340" height="300" style="border-radius:8px;"></canvas>
+    </div>
+    <div class="volcano-counter" id="vcnt">0</div>
+    <div class="volcano-lbl">clicks / 200,000</div>
+    <br/>
+    <button class="btn-volcano" id="vBtn" onclick="doClick()">ACTIVATE 🌋</button>
+    <div class="volcano-progress-bg">
+      <div class="volcano-progress-fill" id="vpf"></div>
+    </div>
+    <div class="volcano-stage" id="vStage">The volcano sleeps under the snow...</div>
+  </div>
+</section>
+
 <div class="lava-bar"></div>
 <footer>
   <div class="footer-text">© 2026 VULKN — vulkn-website.vercel.app — $VLK is not financial advice. Always DYOR.</div>
 </footer>
+
 <script>
   const LAUNCH_DATE = new Date();
   LAUNCH_DATE.setDate(LAUNCH_DATE.getDate() + 30);
   function updateCountdown() {
     const diff = LAUNCH_DATE - new Date();
-    if (diff <= 0) { document.getElementById('cd-days').textContent = '00'; document.getElementById('cd-hours').textContent = '00'; document.getElementById('cd-mins').textContent = '00'; document.getElementById('cd-secs').textContent = '00'; return; }
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
-    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
-    document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
-    document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+    if (diff <= 0) { ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent='00'); return; }
+    const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    document.getElementById('cd-days').textContent=String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent=String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent=String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent=String(s).padStart(2,'0');
   }
-  setInterval(updateCountdown, 1000);
-  updateCountdown();
-  const colors = ['#FF6B00','#FF3300','#FF8C33','#FFB366','#FF4500'];
-  const wrap = document.getElementById('particles');
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const size = Math.random() * 5 + 2;
-    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${Math.random()*10+6}s;animation-delay:${Math.random()*10}s;`;
+  setInterval(updateCountdown,1000); updateCountdown();
+
+  const colors=['#FF6B00','#FF3300','#FF8C33','#FFB366','#FF4500'];
+  const wrap=document.getElementById('particles');
+  for(let i=0;i<30;i++){
+    const p=document.createElement('div'); p.className='particle';
+    const size=Math.random()*5+2;
+    p.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${Math.random()*10+6}s;animation-delay:${Math.random()*10}s;`;
     wrap.appendChild(p);
   }
+
+  const canvas=document.getElementById('fuji');
+  const ctx=canvas.getContext('2d');
+  let clicks=0; const MAX=200000; let particles=[];
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+  function lerp(a,b,t){return a+(b-a)*t;}
+
+  function drawScene(){
+    const p=clamp(clicks/MAX,0,1); const W=340,H=300;
+    ctx.clearRect(0,0,W,H);
+    const r1=Math.round(lerp(5,120,p)),g1=Math.round(lerp(10,20,p)),b1=Math.round(lerp(40,5,p));
+    const skyGrad=ctx.createLinearGradient(0,0,0,H);
+    skyGrad.addColorStop(0,`rgb(${r1},${g1},${b1})`);
+    skyGrad.addColorStop(1,`rgb(${Math.round(r1*0.3)},${Math.round(g1*0.3)},${Math.round(b1*0.5)})`);
+    ctx.fillStyle=skyGrad; ctx.fillRect(0,0,W,H);
+    if(p<0.5){const so=1-p/0.5;[[20,15],[60,10],[120,8],[200,12],[280,20],[40,45],[160,35],[250,40],[300,15],[100,55],[320,50]].forEach(([x,y])=>{ctx.beginPath();ctx.arc(x,y,1.2,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${so*0.8})`;ctx.fill();});}
+    if(p<0.4){const co=(1-p/0.4)*0.3;[[60,120,40,15],[160,130,60,12],[260,125,45,14]].forEach(([x,y,rx,ry])=>{ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fillStyle=`rgba(200,220,255,${co})`;ctx.fill();});}
+    const lakeGrad=ctx.createLinearGradient(0,255,0,300);
+    lakeGrad.addColorStop(0,p>0.3?`rgba(80,20,0,0.6)`:`rgba(20,40,80,0.6)`);
+    lakeGrad.addColorStop(1,p>0.3?`rgba(40,10,0,0.8)`:`rgba(10,20,50,0.8)`);
+    ctx.fillStyle=lakeGrad; ctx.fillRect(0,255,W,45);
+    for(let i=0;i<8;i++){ctx.beginPath();ctx.moveTo(20+i*40,265);ctx.quadraticCurveTo(30+i*40,263,40+i*40,265);ctx.strokeStyle=p>0.3?'rgba(255,100,0,0.2)':'rgba(150,180,255,0.2)';ctx.lineWidth=1;ctx.stroke();}
+    const forestColor=p>0.5?`rgba(80,20,0,0.8)`:`rgba(20,60,20,0.8)`;
+    for(let i=0;i<25;i++){const x=10+i*13,h=15+Math.sin(i*1.3)*5;ctx.beginPath();ctx.moveTo(x,255);ctx.lineTo(x-6,255-h);ctx.lineTo(x+6,255-h);ctx.closePath();ctx.fillStyle=forestColor;ctx.fill();}
+    ctx.save();
+    const fujiGrad=ctx.createLinearGradient(60,50,280,250);
+    if(p<0.3){fujiGrad.addColorStop(0,'#2a2a3a');fujiGrad.addColorStop(0.5,'#1a1a2a');fujiGrad.addColorStop(1,'#111118');}
+    else{fujiGrad.addColorStop(0,`rgb(${Math.round(lerp(42,80,p))},${Math.round(lerp(42,15,p))},${Math.round(lerp(58,5,p))}`+')');fujiGrad.addColorStop(1,'#0a0a05');}
+    ctx.fillStyle=fujiGrad;
+    ctx.beginPath();ctx.moveTo(170,45);ctx.quadraticCurveTo(100,130,35,255);ctx.lineTo(305,255);ctx.quadraticCurveTo(240,130,170,45);ctx.closePath();ctx.fill();
+    const fujiRight=ctx.createLinearGradient(170,50,310,250);
+    if(p<0.3){fujiRight.addColorStop(0,'rgba(255,255,255,0.05)');fujiRight.addColorStop(1,'rgba(255,255,255,0)');}
+    else{fujiRight.addColorStop(0,`rgba(255,${Math.round(lerp(255,50,p))},0,0.08)`);fujiRight.addColorStop(1,'rgba(255,50,0,0)');}
+    ctx.fillStyle=fujiRight;
+    ctx.beginPath();ctx.moveTo(170,45);ctx.quadraticCurveTo(240,130,305,255);ctx.lineTo(200,255);ctx.quadraticCurveTo(190,150,170,45);ctx.closePath();ctx.fill();
+    ctx.restore();
+    const snowOpacity=clamp(1-p*2,0,1);
+    if(snowOpacity>0){ctx.save();ctx.fillStyle=`rgba(240,245,255,${snowOpacity})`;ctx.beginPath();ctx.moveTo(170,45);ctx.quadraticCurveTo(148,85,138,105);ctx.quadraticCurveTo(155,95,170,100);ctx.quadraticCurveTo(185,95,202,105);ctx.quadraticCurveTo(192,85,170,45);ctx.closePath();ctx.fill();ctx.strokeStyle=`rgba(200,215,240,${snowOpacity*0.5})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(165,55);ctx.quadraticCurveTo(155,75,148,95);ctx.stroke();ctx.beginPath();ctx.moveTo(175,55);ctx.quadraticCurveTo(183,72,190,90);ctx.stroke();ctx.restore();}
+    if(p>0.1){const craterGlow=ctx.createRadialGradient(170,50,0,170,50,40);const ca=clamp((p-0.1)*3,0,1);craterGlow.addColorStop(0,`rgba(255,150,0,${ca})`);craterGlow.addColorStop(0.4,`rgba(255,50,0,${ca*0.5})`);craterGlow.addColorStop(1,'rgba(255,0,0,0)');ctx.fillStyle=craterGlow;ctx.beginPath();ctx.ellipse(170,52,40,20,0,0,Math.PI*2);ctx.fill();}
+    if(p>0.05){const sa=clamp(p*4,0,0.7);const smokeCol=p>0.4?`rgba(200,80,0,${sa})`:`rgba(80,80,80,${sa})`;const t=Date.now()/2500;[[-8,0],[3,-18],[-5,-34],[8,-48],[-3,-60]].forEach(([ox,oy],i)=>{const drift=Math.sin(t+i*0.8)*6,r=10+i*5;ctx.beginPath();ctx.arc(170+ox+drift,38+oy,r,0,Math.PI*2);ctx.fillStyle=smokeCol;ctx.fill();});}
+    if(p>0.25){const la=clamp((p-0.25)*2.5,0,1);[[148,100,115,200,85,255],[138,110,105,190,75,255]].forEach(([x1,y1,x2,y2,x3,y3],i)=>{const lavaG=ctx.createLinearGradient(x1,y1,x3,y3);lavaG.addColorStop(0,`rgba(255,150,0,${la})`);lavaG.addColorStop(0.5,`rgba(255,60,0,${la*0.7})`);lavaG.addColorStop(1,`rgba(150,20,0,${la*0.2})`);ctx.strokeStyle=lavaG;ctx.lineWidth=3+i;ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(x2,y2,x3,y3);ctx.stroke();});[[192,100,225,200,255,255],[202,110,235,190,265,255]].forEach(([x1,y1,x2,y2,x3,y3],i)=>{const lavaG=ctx.createLinearGradient(x1,y1,x3,y3);lavaG.addColorStop(0,`rgba(255,150,0,${la})`);lavaG.addColorStop(0.5,`rgba(255,60,0,${la*0.7})`);lavaG.addColorStop(1,`rgba(150,20,0,${la*0.2})`);ctx.strokeStyle=lavaG;ctx.lineWidth=3+i;ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(x2,y2,x3,y3);ctx.stroke();});}
+    if(p>0.5){particles.forEach(pt=>{ctx.beginPath();ctx.arc(pt.x,pt.y,pt.r,0,Math.PI*2);ctx.fillStyle=`rgba(${pt.color},${pt.opacity})`;ctx.fill();});}
+    if(p>0.35){const gg=ctx.createRadialGradient(170,255,0,170,255,140);const ga=clamp((p-0.35)*3,0,0.6);gg.addColorStop(0,`rgba(255,80,0,${ga})`);gg.addColorStop(1,'rgba(255,30,0,0)');ctx.fillStyle=gg;ctx.fillRect(30,200,280,60);}
+    if(p>=1){ctx.font='bold 14px monospace';ctx.fillStyle='#FF6B00';ctx.textAlign='center';ctx.fillText('🌋 $VLK ERUPTION 🌋',170,22);}
+  }
+
+  function updateParticles(){
+    const p=clicks/MAX;
+    if(p>0.5&&Math.random()<p*0.4){particles.push({x:170+(Math.random()-0.5)*15,y:45,vx:(Math.random()-0.5)*5,vy:-Math.random()*8-3,r:Math.random()*5+1,opacity:1,color:Math.random()>0.5?'255,107,0':'255,51,0',gravity:0.12});}
+    particles=particles.filter(pt=>pt.opacity>0.05&&pt.y<300&&pt.y>0);
+    particles.forEach(pt=>{pt.x+=pt.vx;pt.y+=pt.vy;pt.vy+=pt.gravity;pt.vx*=0.99;pt.opacity-=0.018;});
+  }
+
+  function animate(){updateParticles();drawScene();requestAnimationFrame(animate);}
+
+  function updateUI(){
+    const p=clamp(clicks/MAX,0,1);
+    document.getElementById('vcnt').textContent=clicks.toLocaleString('fr-FR');
+    document.getElementById('vpf').style.width=(p*100).toFixed(1)+'%';
+    const btn=document.getElementById('vBtn');
+    const lbl=document.getElementById('vStage');
+    if(p===0){lbl.textContent='The volcano sleeps under the snow...';btn.textContent='ACTIVATE 🌋';btn.style.background='#FF6B00';}
+    else if(p<0.1){lbl.textContent='The heat is rising...';btn.textContent='HEAT UP 🔥';}
+    else if(p<0.25){lbl.textContent='Snow melts, smoke appears...';btn.textContent='CONTINUE 💨';}
+    else if(p<0.4){lbl.textContent='Lava flows down the slopes!';btn.textContent='LAVA FLOWS 🌋';btn.style.background='#FF5500';}
+    else if(p<0.6){lbl.textContent='Eruption imminent!';btn.textContent='ERUPTION! 💥';btn.style.background='#FF4400';}
+    else if(p<0.8){lbl.textContent='The volcano explodes!';btn.textContent='EXPLOSION 🔥🌋';btn.style.background='#FF3300';}
+    else if(p<1){lbl.textContent='MEGA ERUPTION!';btn.textContent='🌋 MEGA ERUPTION 🌋';btn.style.background='#FF2200';}
+    else{lbl.textContent='🌋 TOTAL ERUPTION — $VLK TO THE MOON 🚀';btn.textContent='🌋 TOTAL ERUPTION 🌋';btn.style.background='#FF0000';}
+  }
+
+  function doClick(){if(clicks>=MAX)return;clicks++;updateUI();}
+  animate(); updateUI();
 </script>
 </body>
 </html>
