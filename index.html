@@ -314,22 +314,32 @@
     } catch(e) { console.log("JSONBin error", e); }
   }
 
+  let pendingClicks = 0;
+  let isSaving = false;
+
   async function saveClick() {
-    try {
-      const res = await fetch(BIN_URL + "/latest", {
-        headers: { "X-Master-Key": API_KEY }
-      });
-      const data = await res.json();
-      const current = data.record ? data.record.clicks : 0;
-      await fetch(BIN_URL, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Master-Key": API_KEY
-        },
-        body: JSON.stringify({ clicks: current + 1 })
-      });
-    } catch(e) {}
+    pendingClicks++;
+    if (isSaving) return;
+    isSaving = true;
+    setTimeout(async () => {
+      try {
+        const res = await fetch(BIN_URL + "/latest", {
+          headers: { "X-Master-Key": API_KEY }
+        });
+        const data = await res.json();
+        const current = data.record ? data.record.clicks : 0;
+        await fetch(BIN_URL, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key": API_KEY
+          },
+          body: JSON.stringify({ clicks: current + pendingClicks })
+        });
+        pendingClicks = 0;
+      } catch(e) {}
+      isSaving = false;
+    }, 2000);
   }
   function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
   function lerp(a,b,t){return a+(b-a)*t;}
