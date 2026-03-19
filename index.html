@@ -295,6 +295,21 @@
   const canvas=document.getElementById('fuji');
   const ctx=canvas.getContext('2d');
   let clicks=0; const MAX=200000; let particles=[];
+
+  // COUNTAPI - compteur global
+  async function loadClicks() {
+    try {
+      const res = await fetch("https://api.countapi.xyz/get/vulkn-website/volcano");
+      const data = await res.json();
+      if (data.value) { clicks = Math.min(data.value, MAX); updateUI(); }
+    } catch(e) { console.log("CountAPI error", e); }
+  }
+
+  async function saveClick() {
+    try {
+      await fetch("https://api.countapi.xyz/hit/vulkn-website/volcano");
+    } catch(e) {}
+  }
   function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
   function lerp(a,b,t){return a+(b-a)*t;}
 
@@ -362,8 +377,8 @@
     else{lbl.textContent='🌋 TOTAL ERUPTION — $VLK TO THE MOON 🚀';btn.textContent='🌋 TOTAL ERUPTION 🌋';btn.style.background='#FF0000';}
   }
 
-  function doClick(){if(clicks>=MAX)return;clicks++;updateUI();}
-  animate(); updateUI();
+  function doClick(){if(clicks>=MAX)return;clicks++;updateUI();saveClick();}
+  animate(); updateUI(); loadClicks();
 </script>
 </body>
 </html>
