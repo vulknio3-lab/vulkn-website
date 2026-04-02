@@ -8,791 +8,141 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --fire: #FF4500;
-      --lava: #FF6B00;
-      --gold: #FFB347;
-      --ash: #1a1a1a;
-      --smoke: #0d0d0d;
-      --white: #f5f0eb;
+      --fire: #FF4500; --lava: #FF6B00; --gold: #FFB347;
+      --ash: #1a1a1a; --smoke: #0d0d0d; --white: #f5f0eb;
       --muted: rgba(245,240,235,0.4);
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--smoke);
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
-      cursor: none;
-    }
-
-    /* CURSOR */
-    .cursor {
-      width: 8px; height: 8px;
-      background: var(--lava);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.1s;
-      mix-blend-mode: difference;
-    }
-    .cursor-ring {
-      width: 32px; height: 32px;
-      border: 1px solid var(--lava);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9998;
-      transition: all 0.15s ease;
-      opacity: 0.5;
-    }
-
-    /* NOISE TEXTURE */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
-    }
-
-    /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 24px 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      mix-blend-mode: normal;
-    }
-
-    nav::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(13,13,13,0.9), transparent);
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 28px;
-      letter-spacing: 6px;
-      color: var(--white);
-    }
-
+    body { background: var(--smoke); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
+    .cursor { width: 8px; height: 8px; background: var(--lava); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.1s; mix-blend-mode: difference; }
+    .cursor-ring { width: 32px; height: 32px; border: 1px solid var(--lava); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: all 0.15s ease; opacity: 0.5; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; mix-blend-mode: normal; }
+    nav::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(13,13,13,0.9), transparent); z-index: -1; pointer-events: none; }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 6px; color: var(--white); }
     .nav-logo span { color: var(--lava); }
-
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
-
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; transition: color 0.3s; }
     .nav-links a:hover { color: var(--white); }
-
-    .nav-cta {
-      background: transparent;
-      border: 1px solid var(--lava);
-      color: var(--lava) !important;
-      padding: 8px 24px;
-      border-radius: 2px;
-      transition: all 0.3s !important;
-    }
-
-    .nav-cta:hover {
-      background: var(--lava) !important;
-      color: var(--smoke) !important;
-    }
-
-    /* HERO */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 48px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 100%, rgba(255,69,0,0.15) 0%, transparent 70%),
-        radial-gradient(ellipse 30% 30% at 50% 85%, rgba(255,107,0,0.25) 0%, transparent 60%);
-    }
-
-    .hero-lines {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,107,0,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,107,0,0.03) 1px, transparent 1px);
-      background-size: 80px 80px;
-    }
-
-    .hero-tag {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--lava);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .hero-tag::before {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 1px;
-      background: var(--lava);
-    }
-
-    .hero-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(80px, 18vw, 220px);
-      line-height: 0.85;
-      letter-spacing: -2px;
-      margin-bottom: 40px;
-    }
-
+    .nav-cta { background: transparent; border: 1px solid var(--lava); color: var(--lava) !important; padding: 8px 24px; border-radius: 2px; transition: all 0.3s !important; }
+    .nav-cta:hover { background: var(--lava) !important; color: var(--smoke) !important; }
+    #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 48px 80px; position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(255,69,0,0.15) 0%, transparent 70%), radial-gradient(ellipse 30% 30% at 50% 85%, rgba(255,107,0,0.25) 0%, transparent 60%); }
+    .hero-lines { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,107,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,107,0,0.03) 1px, transparent 1px); background-size: 80px 80px; }
+    .hero-tag { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--lava); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+    .hero-tag::before { content: ''; display: block; width: 40px; height: 1px; background: var(--lava); }
+    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(80px, 18vw, 220px); line-height: 0.85; letter-spacing: -2px; margin-bottom: 40px; }
     .hero-title .line1 { color: var(--white); display: block; }
-    .hero-title .line2 {
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(255,107,0,0.5);
-      display: block;
-    }
-
-    .hero-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 40px;
-    }
-
-    .hero-desc {
-      max-width: 400px;
-      font-size: 15px;
-      line-height: 1.8;
-      color: var(--muted);
-      font-weight: 300;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 16px;
-    }
-
-    .btn-main {
-      background: var(--lava);
-      color: var(--smoke);
-      border: none;
-      padding: 18px 48px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 18px;
-      letter-spacing: 4px;
-      cursor: none;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-main::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.1);
-      transform: translateX(-100%);
-      transition: transform 0.3s;
-    }
-
+    .hero-title .line2 { color: transparent; -webkit-text-stroke: 1px rgba(255,107,0,0.5); display: block; }
+    .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
+    .hero-desc { max-width: 400px; font-size: 15px; line-height: 1.8; color: var(--muted); font-weight: 300; }
+    .hero-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; }
+    .btn-main { background: var(--lava); color: var(--smoke); border: none; padding: 18px 48px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 4px; cursor: none; text-decoration: none; display: inline-block; transition: all 0.3s; position: relative; overflow: hidden; }
+    .btn-main::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.1); transform: translateX(-100%); transition: transform 0.3s; }
     .btn-main:hover::after { transform: translateX(0); }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid rgba(245,240,235,0.15);
-      padding: 18px 48px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 18px;
-      letter-spacing: 4px;
-      cursor: none;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s;
-    }
-
-    .btn-outline:hover {
-      border-color: var(--white);
-      color: var(--white);
-    }
-
-    .hero-scroll {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--muted);
-      writing-mode: vertical-rl;
-      position: absolute;
-      right: 48px;
-      bottom: 80px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .hero-scroll::after {
-      content: '';
-      display: block;
-      width: 1px;
-      height: 60px;
-      background: linear-gradient(to bottom, var(--muted), transparent);
-    }
-
-    /* TICKER */
-    .ticker {
-      background: var(--ash);
-      padding: 16px 0;
-      overflow: hidden;
-      border-top: 1px solid rgba(255,107,0,0.1);
-      border-bottom: 1px solid rgba(255,107,0,0.1);
-    }
-
-    .ticker-track {
-      display: flex;
-      gap: 80px;
-      animation: ticker 20s linear infinite;
-      white-space: nowrap;
-    }
-
-    .ticker-item {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 14px;
-      letter-spacing: 4px;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
+    .btn-outline { background: transparent; color: var(--muted); border: 1px solid rgba(245,240,235,0.15); padding: 18px 48px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 4px; cursor: none; text-decoration: none; display: inline-block; transition: all 0.3s; }
+    .btn-outline:hover { border-color: var(--white); color: var(--white); }
+    .hero-scroll { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; position: absolute; right: 48px; bottom: 80px; display: flex; align-items: center; gap: 12px; }
+    .hero-scroll::after { content: ''; display: block; width: 1px; height: 60px; background: linear-gradient(to bottom, var(--muted), transparent); }
+    .ticker { background: var(--ash); padding: 16px 0; overflow: hidden; border-top: 1px solid rgba(255,107,0,0.1); border-bottom: 1px solid rgba(255,107,0,0.1); }
+    .ticker-track { display: flex; gap: 80px; animation: ticker 20s linear infinite; white-space: nowrap; }
+    .ticker-item { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 4px; color: var(--muted); display: flex; align-items: center; gap: 16px; }
     .ticker-item span { color: var(--lava); }
-
-    @keyframes ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* SECTIONS */
-    section {
-      padding: 120px 48px;
-      position: relative;
-    }
-
-    .section-label {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--lava);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-label::before {
-      content: '';
-      display: block;
-      width: 24px;
-      height: 1px;
-      background: var(--lava);
-    }
-
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(48px, 8vw, 96px);
-      line-height: 0.9;
-      margin-bottom: 64px;
-    }
-
-    /* ABOUT */
-    #about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 120px;
-      align-items: center;
-    }
-
-    .about-text p {
-      font-size: 16px;
-      line-height: 1.9;
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
-
+    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    section { padding: 120px 48px; position: relative; }
+    .section-label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--lava); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+    .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--lava); }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 96px); line-height: 0.9; margin-bottom: 64px; }
+    #about { display: grid; grid-template-columns: 1fr 1fr; gap: 120px; align-items: center; }
+    .about-text p { font-size: 16px; line-height: 1.9; color: var(--muted); margin-bottom: 24px; }
     .about-text p strong { color: var(--white); font-weight: 500; }
-
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-    }
-
-    .stat-box {
-      background: var(--ash);
-      padding: 40px 32px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stat-box::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 2px;
-      background: linear-gradient(to right, var(--lava), transparent);
-    }
-
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .stat-box { background: var(--ash); padding: 40px 32px; position: relative; overflow: hidden; }
+    .stat-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(to right, var(--lava), transparent); }
     .stat-box:first-child::before { background: var(--lava); }
-
-    .stat-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 52px;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
+    .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: var(--white); line-height: 1; margin-bottom: 8px; }
     .stat-num span { color: var(--lava); }
-
-    .stat-label {
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* TOKENOMICS */
-    #tokenomics {
-      background: var(--ash);
-    }
-
-    .toko-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-    }
-
-    .toko-card {
-      background: var(--smoke);
-      padding: 48px 32px;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s;
-    }
-
+    .stat-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    #tokenomics { background: var(--ash); }
+    .toko-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .toko-card { background: var(--smoke); padding: 48px 32px; position: relative; overflow: hidden; transition: background 0.3s; }
     .toko-card:hover { background: #111; }
-
-    .toko-card::after {
-      content: attr(data-pct);
-      position: absolute;
-      bottom: -20px; right: -10px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 100px;
-      color: rgba(255,107,0,0.04);
-      line-height: 1;
-      pointer-events: none;
-    }
-
-    .toko-pct {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 64px;
-      color: var(--lava);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .toko-name {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 16px;
-    }
-
-    .toko-amount {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .toko-detail {
-      font-size: 12px;
-      color: var(--lava);
-      margin-top: 8px;
-      opacity: 0.7;
-    }
-
-    /* LAUNCH */
-    #launch {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 120px;
-      align-items: start;
-    }
-
-    .launch-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .launch-step {
-      display: flex;
-      gap: 32px;
-      padding: 32px 0;
-      border-bottom: 1px solid rgba(245,240,235,0.06);
-      align-items: flex-start;
-    }
-
+    .toko-card::after { content: attr(data-pct); position: absolute; bottom: -20px; right: -10px; font-family: 'Bebas Neue', sans-serif; font-size: 100px; color: rgba(255,107,0,0.04); line-height: 1; pointer-events: none; }
+    .toko-pct { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--lava); line-height: 1; margin-bottom: 8px; }
+    .toko-name { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--white); margin-bottom: 16px; }
+    .toko-amount { font-size: 13px; color: var(--muted); }
+    .toko-detail { font-size: 12px; color: var(--lava); margin-top: 8px; opacity: 0.7; }
+    #launch { display: grid; grid-template-columns: 1fr 1fr; gap: 120px; align-items: start; }
+    .launch-steps { display: flex; flex-direction: column; gap: 0; }
+    .launch-step { display: flex; gap: 32px; padding: 32px 0; border-bottom: 1px solid rgba(245,240,235,0.06); align-items: flex-start; }
     .launch-step:first-child { padding-top: 0; }
-
-    .step-n {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 48px;
-      color: rgba(255,107,0,0.2);
-      line-height: 1;
-      min-width: 48px;
-    }
-
-    .step-body h4 {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--white);
-      margin-bottom: 8px;
-      letter-spacing: 1px;
-    }
-
-    .step-body p {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .launch-info {
-      background: var(--ash);
-      padding: 48px;
-      position: relative;
-    }
-
-    .launch-info::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 2px; height: 100%;
-      background: var(--lava);
-    }
-
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(245,240,235,0.06);
-    }
-
+    .step-n { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: rgba(255,107,0,0.2); line-height: 1; min-width: 48px; }
+    .step-body h4 { font-size: 15px; font-weight: 500; color: var(--white); margin-bottom: 8px; letter-spacing: 1px; }
+    .step-body p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .launch-info { background: var(--ash); padding: 48px; position: relative; }
+    .launch-info::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: var(--lava); }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(245,240,235,0.06); }
     .info-row:last-child { border-bottom: none; }
-
-    .info-key {
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .info-val {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      color: var(--white);
-      letter-spacing: 2px;
-    }
-
+    .info-key { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    .info-val { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--white); letter-spacing: 2px; }
     .info-val.highlight { color: var(--lava); }
-
-    /* SAFU */
-    #safu {
-      background: var(--ash);
-    }
-
-    .safu-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-    }
-
-    .safu-card {
-      background: var(--smoke);
-      padding: 48px 40px;
-      position: relative;
-    }
-
-    .safu-icon {
-      font-size: 32px;
-      margin-bottom: 24px;
-      display: block;
-    }
-
-    .safu-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 24px;
-      letter-spacing: 2px;
-      color: var(--white);
-      margin-bottom: 12px;
-    }
-
-    .safu-desc {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
+    #safu { background: var(--ash); }
+    .safu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .safu-card { background: var(--smoke); padding: 48px 40px; position: relative; }
+    .safu-icon { font-size: 32px; margin-bottom: 24px; display: block; }
+    .safu-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; color: var(--white); margin-bottom: 12px; }
+    .safu-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
 
     /* ROADMAP */
-    #roadmap { }
+    .road-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; position: relative; }
+    .road-grid-row2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 2px; }
+    .road-card { padding: 48px 32px; background: var(--ash); position: relative; }
+    .road-card.active { background: var(--smoke); border-top: 2px solid var(--lava); }
+    .road-card.future { background: var(--smoke); border-top: 2px solid rgba(255,107,0,0.3); overflow: hidden; }
+    .road-card.future::before { content: 'COMING SOON'; position: absolute; top: 14px; right: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 10px; letter-spacing: 3px; color: var(--lava); opacity: 0.45; border: 1px solid rgba(255,107,0,0.2); padding: 2px 8px; }
+    .road-card.future .road-q { color: rgba(255,107,0,0.55); }
+    .road-card.future .road-items li { opacity: 0.65; }
+    .road-q { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--lava); margin-bottom: 24px; display: block; }
+    .road-items { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .road-items li { font-size: 13px; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+    .road-items li::before { content: '—'; color: var(--lava); flex-shrink: 0; opacity: 0.5; }
 
-    .road-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-      position: relative;
-    }
-
-    .road-card {
-      padding: 48px 32px;
-      background: var(--ash);
-      position: relative;
-    }
-
-    .road-card.active {
-      background: var(--smoke);
-      border-top: 2px solid var(--lava);
-    }
-
-    .road-q {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 36px;
-      color: var(--lava);
-      margin-bottom: 24px;
-      display: block;
-    }
-
-    .road-items {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .road-items li {
-      font-size: 13px;
-      color: var(--muted);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      line-height: 1.5;
-    }
-
-    .road-items li::before {
-      content: '—';
-      color: var(--lava);
-      flex-shrink: 0;
-      opacity: 0.5;
-    }
-
-    /* VOLCANO */
-    #volcano {
-      background: var(--ash);
-      text-align: center;
-    }
-
-    .volcano-wrap {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 48px;
-    }
-
-    .volcano-counter {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 72px;
-      color: var(--lava);
-      line-height: 1;
-      letter-spacing: 4px;
-    }
-
-    .volcano-sub {
-      font-size: 12px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 40px;
-    }
-
-    .btn-volcano {
-      background: var(--lava);
-      color: var(--smoke);
-      border: none;
-      padding: 20px 64px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      letter-spacing: 6px;
-      cursor: none;
-      margin-bottom: 40px;
-      display: inline-block;
-      transition: all 0.3s;
-    }
-
+    #volcano { background: var(--ash); text-align: center; }
+    .volcano-wrap { display: flex; justify-content: center; margin-bottom: 48px; }
+    .volcano-counter { font-family: 'Bebas Neue', sans-serif; font-size: 72px; color: var(--lava); line-height: 1; letter-spacing: 4px; }
+    .volcano-sub { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
+    .btn-volcano { background: var(--lava); color: var(--smoke); border: none; padding: 20px 64px; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 6px; cursor: none; margin-bottom: 40px; display: inline-block; transition: all 0.3s; }
     .btn-volcano:hover { background: var(--fire); }
-
-    .volcano-progress {
-      max-width: 600px;
-      margin: 0 auto 16px;
-      height: 2px;
-      background: rgba(245,240,235,0.1);
-    }
-
-    .volcano-fill {
-      height: 100%;
-      background: linear-gradient(to right, var(--fire), var(--gold));
-      transition: width 0.3s;
-      width: 0%;
-    }
-
-    .volcano-stage {
-      font-size: 12px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* FOOTER */
-    footer {
-      padding: 80px 48px 48px;
-      border-top: 1px solid rgba(245,240,235,0.06);
-    }
-
-    .footer-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 80px;
-    }
-
-    .footer-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 48px;
-      letter-spacing: 8px;
-      color: var(--white);
-    }
-
+    .volcano-progress { max-width: 600px; margin: 0 auto 16px; height: 2px; background: rgba(245,240,235,0.1); }
+    .volcano-fill { height: 100%; background: linear-gradient(to right, var(--fire), var(--gold)); transition: width 0.3s; width: 0%; }
+    .volcano-stage { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+    footer { padding: 80px 48px 48px; border-top: 1px solid rgba(245,240,235,0.06); }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 80px; }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 8px; color: var(--white); }
     .footer-logo span { color: var(--lava); }
-
-    .footer-links {
-      display: flex;
-      gap: 40px;
-    }
-
-    .footer-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
-
+    .footer-links { display: flex; gap: 40px; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s; }
     .footer-links a:hover { color: var(--white); }
-
-    .footer-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 48px;
-      border-top: 1px solid rgba(245,240,235,0.06);
-    }
-
-    .footer-copy {
-      font-size: 12px;
-      color: rgba(245,240,235,0.2);
-      letter-spacing: 1px;
-    }
-
-    .footer-disclaimer {
-      font-size: 11px;
-      color: rgba(245,240,235,0.2);
-      letter-spacing: 1px;
-    }
-
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .fade-up {
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-    }
-
-    .fade-up-1 { animation-delay: 0.1s; }
-    .fade-up-2 { animation-delay: 0.2s; }
-    .fade-up-3 { animation-delay: 0.3s; }
-    .fade-up-4 { animation-delay: 0.4s; }
-
-    /* MOBILE */
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 48px; border-top: 1px solid rgba(245,240,235,0.06); }
+    .footer-copy { font-size: 12px; color: rgba(245,240,235,0.2); letter-spacing: 1px; }
+    .footer-disclaimer { font-size: 11px; color: rgba(245,240,235,0.2); letter-spacing: 1px; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { opacity: 0; animation: fadeUp 0.8s ease forwards; }
+    .fade-up-1 { animation-delay: 0.1s; } .fade-up-2 { animation-delay: 0.2s; } .fade-up-3 { animation-delay: 0.3s; } .fade-up-4 { animation-delay: 0.4s; }
     @media (max-width: 768px) {
-      nav { padding: 20px 24px; }
-      .nav-links { display: none; }
-      #hero { padding: 0 24px 60px; }
-      .hero-bottom { flex-direction: column; align-items: flex-start; }
-      .hero-scroll { display: none; }
-      section { padding: 80px 24px; }
-      #about { grid-template-columns: 1fr; gap: 60px; }
-      .toko-grid { grid-template-columns: 1fr 1fr; }
-      #launch { grid-template-columns: 1fr; gap: 60px; }
-      .safu-grid { grid-template-columns: 1fr; }
-      .road-grid { grid-template-columns: 1fr 1fr; }
-      footer { padding: 60px 24px 40px; }
-      .footer-top { flex-direction: column; gap: 40px; }
+      nav { padding: 20px 24px; } .nav-links { display: none; } #hero { padding: 0 24px 60px; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; } .hero-scroll { display: none; }
+      section { padding: 80px 24px; } #about { grid-template-columns: 1fr; gap: 60px; }
+      .toko-grid { grid-template-columns: 1fr 1fr; } #launch { grid-template-columns: 1fr; gap: 60px; }
+      .safu-grid { grid-template-columns: 1fr; } .road-grid { grid-template-columns: 1fr 1fr; }
+      .road-grid-row2 { grid-template-columns: 1fr; }
+      footer { padding: 60px 24px 40px; } .footer-top { flex-direction: column; gap: 40px; }
       .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
     }
   </style>
 </head>
 <body>
-
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
@@ -812,14 +162,11 @@
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-lines"></div>
-
   <div class="hero-tag fade-up fade-up-1">Fair Launch — Pump.fun — Solana</div>
-
   <h1 class="hero-title fade-up fade-up-2">
     <span class="line1">VULKN</span>
     <span class="line2">$VLK</span>
   </h1>
-
   <div class="hero-bottom">
     <p class="hero-desc fade-up fade-up-3">
       The AI Shield of Solana. A deflationary token with real utility — protecting crypto investors from scams and rug pulls. Fair launch. No team wallet. Liquidity burned.
@@ -829,7 +176,6 @@
       <a href="https://t.me/VulknSOL" target="_blank" class="btn-outline">Join Telegram</a>
     </div>
   </div>
-
   <div class="hero-scroll">Scroll</div>
 </section>
 
@@ -840,12 +186,16 @@
     <div class="ticker-item">Fair Launch <span>✦</span></div>
     <div class="ticker-item">Liquidity Burned <span>✦</span></div>
     <div class="ticker-item">AI Shield of Solana <span>✦</span></div>
+    <div class="ticker-item">Formations E-Commerce <span>✦</span></div>
+    <div class="ticker-item">Boutique VULKN <span>✦</span></div>
     <div class="ticker-item">Pump.fun <span>✦</span></div>
     <div class="ticker-item">No Rug <span>✦</span></div>
     <div class="ticker-item">VULKN <span>$VLK</span></div>
     <div class="ticker-item">Fair Launch <span>✦</span></div>
     <div class="ticker-item">Liquidity Burned <span>✦</span></div>
     <div class="ticker-item">AI Shield of Solana <span>✦</span></div>
+    <div class="ticker-item">Formations E-Commerce <span>✦</span></div>
+    <div class="ticker-item">Boutique VULKN <span>✦</span></div>
     <div class="ticker-item">Pump.fun <span>✦</span></div>
     <div class="ticker-item">No Rug <span>✦</span></div>
   </div>
@@ -856,33 +206,15 @@
   <div class="about-text">
     <div class="section-label">About</div>
     <h2 class="section-title">What is<br/>VULKN?</h2>
-    <p>
-      VULKN is not just another token. It's a <strong>movement</strong> — a community-driven project built on Solana with a real mission: protecting crypto investors from scams, rug pulls, and bad projects.
-    </p>
-    <p>
-      Launched <strong>fair on Pump.fun</strong>, with no team wallet, no pre-sale advantage, and liquidity burned at 69 SOL. What you see is what you get.
-    </p>
-    <p>
-      Our long-term vision is to build the <strong>AI Shield of Solana</strong> — a suite of tools powered by artificial intelligence that helps every investor make safer, smarter decisions.
-    </p>
+    <p>VULKN is not just another token. It's a <strong>movement</strong> — a community-driven project built on Solana with a real mission: protecting crypto investors from scams, rug pulls, and bad projects.</p>
+    <p>Launched <strong>fair on Pump.fun</strong>, with no team wallet, no pre-sale advantage, and liquidity burned at 69 SOL. What you see is what you get.</p>
+    <p>Our long-term vision is to build the <strong>AI Shield of Solana</strong> — a suite of tools powered by artificial intelligence that helps every investor make safer, smarter decisions.</p>
   </div>
   <div class="about-stats">
-    <div class="stat-box">
-      <div class="stat-num">1<span>B</span></div>
-      <div class="stat-label">Total Supply</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num">69<span></span></div>
-      <div class="stat-label">SOL Target</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num">∞<span></span></div>
-      <div class="stat-label">Liquidity Lock</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num">0<span></span></div>
-      <div class="stat-label">Team Wallet</div>
-    </div>
+    <div class="stat-box"><div class="stat-num">1<span>B</span></div><div class="stat-label">Total Supply</div></div>
+    <div class="stat-box"><div class="stat-num">69</div><div class="stat-label">SOL Target</div></div>
+    <div class="stat-box"><div class="stat-num">∞</div><div class="stat-label">Liquidity Lock</div></div>
+    <div class="stat-box"><div class="stat-num">0</div><div class="stat-label">Team Wallet</div></div>
   </div>
 </section>
 
@@ -891,30 +223,10 @@
   <div class="section-label">Tokenomics</div>
   <h2 class="section-title">Simple.<br/>Transparent.</h2>
   <div class="toko-grid">
-    <div class="toko-card" data-pct="100">
-      <div class="toko-pct">100%</div>
-      <div class="toko-name">Fair Launch</div>
-      <div class="toko-amount">1,000,000,000 $VLK</div>
-      <div class="toko-detail">All tokens on Pump.fun</div>
-    </div>
-    <div class="toko-card" data-pct="0">
-      <div class="toko-pct">0%</div>
-      <div class="toko-name">Team Wallet</div>
-      <div class="toko-amount">No allocation</div>
-      <div class="toko-detail">No insider advantage</div>
-    </div>
-    <div class="toko-card" data-pct="∞">
-      <div class="toko-pct">∞</div>
-      <div class="toko-name">Liquidity Lock</div>
-      <div class="toko-amount">Burned at 69 SOL</div>
-      <div class="toko-detail">Permanent — forever</div>
-    </div>
-    <div class="toko-card" data-pct="69">
-      <div class="toko-pct">69</div>
-      <div class="toko-name">SOL Target</div>
-      <div class="toko-amount">Raydium listing</div>
-      <div class="toko-detail">Auto-migration</div>
-    </div>
+    <div class="toko-card" data-pct="100"><div class="toko-pct">100%</div><div class="toko-name">Fair Launch</div><div class="toko-amount">1,000,000,000 $VLK</div><div class="toko-detail">All tokens on Pump.fun</div></div>
+    <div class="toko-card" data-pct="0"><div class="toko-pct">0%</div><div class="toko-name">Team Wallet</div><div class="toko-amount">No allocation</div><div class="toko-detail">No insider advantage</div></div>
+    <div class="toko-card" data-pct="∞"><div class="toko-pct">∞</div><div class="toko-name">Liquidity Lock</div><div class="toko-amount">Burned at 69 SOL</div><div class="toko-detail">Permanent — forever</div></div>
+    <div class="toko-card" data-pct="69"><div class="toko-pct">69</div><div class="toko-name">SOL Target</div><div class="toko-amount">Raydium listing</div><div class="toko-detail">Auto-migration</div></div>
   </div>
 </section>
 
@@ -924,66 +236,21 @@
     <div class="section-label">How to buy</div>
     <h2 class="section-title">Get<br/>$VLK</h2>
     <div class="launch-steps">
-      <div class="launch-step">
-        <div class="step-n">01</div>
-        <div class="step-body">
-          <h4>Get a Phantom Wallet</h4>
-          <p>Download Phantom at phantom.app and create your Solana wallet in minutes.</p>
-        </div>
-      </div>
-      <div class="launch-step">
-        <div class="step-n">02</div>
-        <div class="step-body">
-          <h4>Buy SOL</h4>
-          <p>Purchase SOL on Binance, Coinbase or any exchange and send it to your Phantom wallet.</p>
-        </div>
-      </div>
-      <div class="launch-step">
-        <div class="step-n">03</div>
-        <div class="step-body">
-          <h4>Go to Pump.fun</h4>
-          <p>Connect your wallet on pump.fun and search for VULKN $VLK.</p>
-        </div>
-      </div>
-      <div class="launch-step">
-        <div class="step-n">04</div>
-        <div class="step-body">
-          <h4>Buy $VLK</h4>
-          <p>Enter the amount of SOL you want to invest and confirm the transaction. Welcome to the eruption. 🌋</p>
-        </div>
-      </div>
+      <div class="launch-step"><div class="step-n">01</div><div class="step-body"><h4>Get a Phantom Wallet</h4><p>Download Phantom at phantom.app and create your Solana wallet in minutes.</p></div></div>
+      <div class="launch-step"><div class="step-n">02</div><div class="step-body"><h4>Buy SOL</h4><p>Purchase SOL on Binance, Coinbase or any exchange and send it to your Phantom wallet.</p></div></div>
+      <div class="launch-step"><div class="step-n">03</div><div class="step-body"><h4>Go to Pump.fun</h4><p>Connect your wallet on pump.fun and search for VULKN $VLK.</p></div></div>
+      <div class="launch-step"><div class="step-n">04</div><div class="step-body"><h4>Buy $VLK</h4><p>Enter the amount of SOL you want to invest and confirm the transaction. Welcome to the eruption. 🌋</p></div></div>
     </div>
   </div>
   <div>
     <div class="launch-info">
-      <div class="info-row">
-        <span class="info-key">Platform</span>
-        <span class="info-val highlight">Pump.fun</span>
-      </div>
-      <div class="info-row">
-        <span class="info-key">Network</span>
-        <span class="info-val">Solana</span>
-      </div>
-      <div class="info-row">
-        <span class="info-key">Supply</span>
-        <span class="info-val">1,000,000,000</span>
-      </div>
-      <div class="info-row">
-        <span class="info-key">Target</span>
-        <span class="info-val highlight">69 SOL</span>
-      </div>
-      <div class="info-row">
-        <span class="info-key">Liquidity</span>
-        <span class="info-val highlight">Burned ∞</span>
-      </div>
-      <div class="info-row">
-        <span class="info-key">Team Wallet</span>
-        <span class="info-val">None</span>
-      </div>
-      <div class="info-row">
-        <span class="info-key">Listing</span>
-        <span class="info-val">Raydium Auto</span>
-      </div>
+      <div class="info-row"><span class="info-key">Platform</span><span class="info-val highlight">Pump.fun</span></div>
+      <div class="info-row"><span class="info-key">Network</span><span class="info-val">Solana</span></div>
+      <div class="info-row"><span class="info-key">Supply</span><span class="info-val">1,000,000,000</span></div>
+      <div class="info-row"><span class="info-key">Target</span><span class="info-val highlight">69 SOL</span></div>
+      <div class="info-row"><span class="info-key">Liquidity</span><span class="info-val highlight">Burned ∞</span></div>
+      <div class="info-row"><span class="info-key">Team Wallet</span><span class="info-val">None</span></div>
+      <div class="info-row"><span class="info-key">Listing</span><span class="info-val">Raydium Auto</span></div>
     </div>
   </div>
 </section>
@@ -993,21 +260,9 @@
   <div class="section-label">Security</div>
   <h2 class="section-title">Why VULKN<br/>is SAFU</h2>
   <div class="safu-grid">
-    <div class="safu-card">
-      <span class="safu-icon">🔒</span>
-      <div class="safu-title">Liquidity Burned</div>
-      <p class="safu-desc">At 69 SOL, Pump.fun automatically burns all LP tokens. The liquidity is locked forever — no one can ever withdraw it, not even us.</p>
-    </div>
-    <div class="safu-card">
-      <span class="safu-icon">🚫</span>
-      <div class="safu-title">No Team Wallet</div>
-      <p class="safu-desc">Fair launch means everyone starts equal. No insider allocation, no pre-sale advantage. The community owns $VLK entirely.</p>
-    </div>
-    <div class="safu-card">
-      <span class="safu-icon">🤖</span>
-      <div class="safu-title">AI Protection</div>
-      <p class="safu-desc">Our AI tools are being developed to protect the community — rug pull detectors, scam alerts, and market analysis. Coming Q3 2026.</p>
-    </div>
+    <div class="safu-card"><span class="safu-icon">🔒</span><div class="safu-title">Liquidity Burned</div><p class="safu-desc">At 69 SOL, Pump.fun automatically burns all LP tokens. The liquidity is locked forever — no one can ever withdraw it, not even us.</p></div>
+    <div class="safu-card"><span class="safu-icon">🚫</span><div class="safu-title">No Team Wallet</div><p class="safu-desc">Fair launch means everyone starts equal. No insider allocation, no pre-sale advantage. The community owns $VLK entirely.</p></div>
+    <div class="safu-card"><span class="safu-icon">🤖</span><div class="safu-title">AI Protection</div><p class="safu-desc">Our AI tools are being developed to protect the community — rug pull detectors, scam alerts, and market analysis. Coming Q3 2026.</p></div>
   </div>
 </section>
 
@@ -1015,6 +270,8 @@
 <section id="roadmap">
   <div class="section-label">Roadmap</div>
   <h2 class="section-title">The<br/>Eruption</h2>
+
+  <!-- Ligne 1 : Q1 → Q3 -->
   <div class="road-grid">
     <div class="road-card active">
       <span class="road-q">Q1 2026</span>
@@ -1043,6 +300,10 @@
         <li>CEX targets</li>
       </ul>
     </div>
+  </div>
+
+  <!-- Ligne 2 : Q4 + 2 nouvelles étapes -->
+  <div class="road-grid-row2">
     <div class="road-card">
       <span class="road-q">Q4 2026</span>
       <ul class="road-items">
@@ -1050,6 +311,30 @@
         <li>Staking mechanism</li>
         <li>Cross-chain bridges</li>
         <li>V2 roadmap</li>
+      </ul>
+    </div>
+
+    <!-- NEW PHASE 1 -->
+    <div class="road-card future">
+      <span class="road-q">2027 — I</span>
+      <ul class="road-items">
+        <li>E-commerce training platform launch</li>
+        <li>3 levels: Beginner · Intermediate · Expert</li>
+        <li>Exclusive payment in $VLK</li>
+        <li>$VLK burned on every purchase 🔥</li>
+        <li>Partnerships with e-commerce experts</li>
+      </ul>
+    </div>
+
+    <!-- NEW PHASE 2 -->
+    <div class="road-card future">
+      <span class="road-q">2027 — II</span>
+      <ul class="road-items">
+        <li>VULKN clothing brand launch</li>
+        <li>Official online store</li>
+        <li>Premium streetwear payable in $VLK</li>
+        <li>$VLK burned on every order 🔥</li>
+        <li>Exclusive drops for holders</li>
       </ul>
     </div>
   </div>
@@ -1065,9 +350,7 @@
   <div class="volcano-counter" id="vcnt">0</div>
   <div class="volcano-sub">clicks / 200,000 — surprise at goal 🎁</div>
   <button class="btn-volcano" id="vBtn" onclick="doClick()">ACTIVATE 🌋</button>
-  <div class="volcano-progress">
-    <div class="volcano-fill" id="vpf"></div>
-  </div>
+  <div class="volcano-progress"><div class="volcano-fill" id="vpf"></div></div>
   <div class="volcano-stage" id="vStage">The volcano sleeps...</div>
 </section>
 
@@ -1089,122 +372,27 @@
 </footer>
 
 <script>
-  // CURSOR
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx - 4 + 'px';
-    cursor.style.top = my - 4 + 'px';
-  });
-
-  function animRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) *.12;
-    ring.style.left = rx - 16 + 'px';
-    ring.style.top = ry - 16 + 'px';
-    requestAnimationFrame(animRing);
-  }
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx - 4 + 'px'; cursor.style.top = my - 4 + 'px'; });
+  function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) *.12; ring.style.left = rx - 16 + 'px'; ring.style.top = ry - 16 + 'px'; requestAnimationFrame(animRing); }
   animRing();
 
-  // VOLCANO
   const canvas = document.getElementById('fuji');
   const ctx = canvas.getContext('2d');
   let clicks = 0; const MAX = 200000; let particles = [];
-
   function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
   function lerp(a,b,t){return a+(b-a)*t;}
-
-  function drawScene(){
-    const p=clamp(clicks/MAX,0,1); const W=340,H=300;
-    ctx.clearRect(0,0,W,H);
-    const r1=Math.round(lerp(5,120,p)),g1=Math.round(lerp(10,20,p)),b1=Math.round(lerp(40,5,p));
-    const skyGrad=ctx.createLinearGradient(0,0,0,H);
-    skyGrad.addColorStop(0,`rgb(${r1},${g1},${b1})`);
-    skyGrad.addColorStop(1,`rgb(${Math.round(r1*0.3)},${Math.round(g1*0.3)},${Math.round(b1*0.5)})`);
-    ctx.fillStyle=skyGrad; ctx.fillRect(0,0,W,H);
-    if(p<0.5){const so=1-p/0.5;[[20,15],[60,10],[120,8],[200,12],[280,20],[40,45],[160,35],[250,40],[300,15],[100,55],[320,50]].forEach(([x,y])=>{ctx.beginPath();ctx.arc(x,y,1.2,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${so*0.8})`;ctx.fill();});}
-    const lakeGrad=ctx.createLinearGradient(0,255,0,300);
-    lakeGrad.addColorStop(0,p>0.3?`rgba(80,20,0,0.6)`:`rgba(20,40,80,0.6)`);
-    lakeGrad.addColorStop(1,p>0.3?`rgba(40,10,0,0.8)`:`rgba(10,20,50,0.8)`);
-    ctx.fillStyle=lakeGrad; ctx.fillRect(0,255,W,45);
-    const forestColor=p>0.5?`rgba(80,20,0,0.8)`:`rgba(20,60,20,0.8)`;
-    for(let i=0;i<25;i++){const x=10+i*13,h=15+Math.sin(i*1.3)*5;ctx.beginPath();ctx.moveTo(x,255);ctx.lineTo(x-6,255-h);ctx.lineTo(x+6,255-h);ctx.closePath();ctx.fillStyle=forestColor;ctx.fill();}
-    ctx.save();
-    const fg=ctx.createLinearGradient(60,50,280,250);
-    if(p<0.3){fg.addColorStop(0,'#2a2a3a');fg.addColorStop(0.5,'#1a1a2a');fg.addColorStop(1,'#111118');}
-    else{fg.addColorStop(0,`rgb(${Math.round(lerp(42,80,p))},${Math.round(lerp(42,15,p))},${Math.round(lerp(58,5,p))}`+')');fg.addColorStop(1,'#0a0a05');}
-    ctx.fillStyle=fg;
-    ctx.beginPath();ctx.moveTo(170,45);ctx.quadraticCurveTo(100,130,35,255);ctx.lineTo(305,255);ctx.quadraticCurveTo(240,130,170,45);ctx.closePath();ctx.fill();
-    ctx.restore();
-    const sn=clamp(1-p*2,0,1);
-    if(sn>0){ctx.save();ctx.fillStyle=`rgba(240,245,255,${sn})`;ctx.beginPath();ctx.moveTo(170,45);ctx.quadraticCurveTo(148,85,138,105);ctx.quadraticCurveTo(155,95,170,100);ctx.quadraticCurveTo(185,95,202,105);ctx.quadraticCurveTo(192,85,170,45);ctx.closePath();ctx.fill();ctx.restore();}
-    if(p>0.1){const cg=ctx.createRadialGradient(170,50,0,170,50,40);const ca=clamp((p-0.1)*3,0,1);cg.addColorStop(0,`rgba(255,150,0,${ca})`);cg.addColorStop(0.4,`rgba(255,50,0,${ca*0.5})`);cg.addColorStop(1,'rgba(255,0,0,0)');ctx.fillStyle=cg;ctx.beginPath();ctx.ellipse(170,52,40,20,0,0,Math.PI*2);ctx.fill();}
-    if(p>0.05){const sa=clamp(p*4,0,0.7);const sc=p>0.4?`rgba(200,80,0,${sa})`:`rgba(80,80,80,${sa})`;const t=Date.now()/2500;[[-8,0],[3,-18],[-5,-34],[8,-48],[-3,-60]].forEach(([ox,oy],i)=>{const dr=Math.sin(t+i*0.8)*6,r=10+i*5;ctx.beginPath();ctx.arc(170+ox+dr,38+oy,r,0,Math.PI*2);ctx.fillStyle=sc;ctx.fill();});}
-    if(p>0.25){const la=clamp((p-0.25)*2.5,0,1);[[148,100,115,200,85,255],[138,110,105,190,75,255]].forEach(([x1,y1,x2,y2,x3,y3],i)=>{const lg=ctx.createLinearGradient(x1,y1,x3,y3);lg.addColorStop(0,`rgba(255,150,0,${la})`);lg.addColorStop(0.5,`rgba(255,60,0,${la*0.7})`);lg.addColorStop(1,`rgba(150,20,0,${la*0.2})`);ctx.strokeStyle=lg;ctx.lineWidth=3+i;ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(x2,y2,x3,y3);ctx.stroke();});[[192,100,225,200,255,255],[202,110,235,190,265,255]].forEach(([x1,y1,x2,y2,x3,y3],i)=>{const lg=ctx.createLinearGradient(x1,y1,x3,y3);lg.addColorStop(0,`rgba(255,150,0,${la})`);lg.addColorStop(0.5,`rgba(255,60,0,${la*0.7})`);lg.addColorStop(1,`rgba(150,20,0,${la*0.2})`);ctx.strokeStyle=lg;ctx.lineWidth=3+i;ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(x2,y2,x3,y3);ctx.stroke();});}
-    if(p>0.5){particles.forEach(pt=>{ctx.beginPath();ctx.arc(pt.x,pt.y,pt.r,0,Math.PI*2);ctx.fillStyle=`rgba(${pt.color},${pt.opacity})`;ctx.fill();});}
-    if(p>=1){ctx.font='bold 14px monospace';ctx.fillStyle='#FF6B00';ctx.textAlign='center';ctx.fillText('🌋 $VLK ERUPTION 🌋',170,22);}
-  }
-
-  function updateParticles(){
-    const p=clicks/MAX;
-    if(p>0.5&&Math.random()<p*0.4){particles.push({x:170+(Math.random()-0.5)*15,y:45,vx:(Math.random()-0.5)*5,vy:-Math.random()*8-3,r:Math.random()*5+1,opacity:1,color:Math.random()>0.5?'255,107,0':'255,51,0',gravity:0.12});}
-    particles=particles.filter(pt=>pt.opacity>0.05&&pt.y<300&&pt.y>0);
-    particles.forEach(pt=>{pt.x+=pt.vx;pt.y+=pt.vy;pt.vy+=pt.gravity;pt.vx*=0.99;pt.opacity-=0.018;});
-  }
-
+  function drawScene(){const p=clamp(clicks/MAX,0,1);const W=340,H=300;ctx.clearRect(0,0,W,H);const r1=Math.round(lerp(5,120,p)),g1=Math.round(lerp(10,20,p)),b1=Math.round(lerp(40,5,p));const skyGrad=ctx.createLinearGradient(0,0,0,H);skyGrad.addColorStop(0,`rgb(${r1},${g1},${b1})`);skyGrad.addColorStop(1,`rgb(${Math.round(r1*0.3)},${Math.round(g1*0.3)},${Math.round(b1*0.5)})`);ctx.fillStyle=skyGrad;ctx.fillRect(0,0,W,H);if(p<0.5){const so=1-p/0.5;[[20,15],[60,10],[120,8],[200,12],[280,20],[40,45],[160,35],[250,40],[300,15],[100,55],[320,50]].forEach(([x,y])=>{ctx.beginPath();ctx.arc(x,y,1.2,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${so*0.8})`;ctx.fill();});}const lakeGrad=ctx.createLinearGradient(0,255,0,300);lakeGrad.addColorStop(0,p>0.3?`rgba(80,20,0,0.6)`:`rgba(20,40,80,0.6)`);lakeGrad.addColorStop(1,p>0.3?`rgba(40,10,0,0.8)`:`rgba(10,20,50,0.8)`);ctx.fillStyle=lakeGrad;ctx.fillRect(0,255,W,45);const forestColor=p>0.5?`rgba(80,20,0,0.8)`:`rgba(20,60,20,0.8)`;for(let i=0;i<25;i++){const x=10+i*13,h=15+Math.sin(i*1.3)*5;ctx.beginPath();ctx.moveTo(x,255);ctx.lineTo(x-6,255-h);ctx.lineTo(x+6,255-h);ctx.closePath();ctx.fillStyle=forestColor;ctx.fill();}ctx.save();const fg=ctx.createLinearGradient(60,50,280,250);if(p<0.3){fg.addColorStop(0,'#2a2a3a');fg.addColorStop(0.5,'#1a1a2a');fg.addColorStop(1,'#111118');}else{fg.addColorStop(0,`rgb(${Math.round(lerp(42,80,p))},${Math.round(lerp(42,15,p))},${Math.round(lerp(58,5,p))}`+')');fg.addColorStop(1,'#0a0a05');}ctx.fillStyle=fg;ctx.beginPath();ctx.moveTo(170,45);ctx.quadraticCurveTo(100,130,35,255);ctx.lineTo(305,255);ctx.quadraticCurveTo(240,130,170,45);ctx.closePath();ctx.fill();ctx.restore();const sn=clamp(1-p*2,0,1);if(sn>0){ctx.save();ctx.fillStyle=`rgba(240,245,255,${sn})`;ctx.beginPath();ctx.moveTo(170,45);ctx.quadraticCurveTo(148,85,138,105);ctx.quadraticCurveTo(155,95,170,100);ctx.quadraticCurveTo(185,95,202,105);ctx.quadraticCurveTo(192,85,170,45);ctx.closePath();ctx.fill();ctx.restore();}if(p>0.1){const cg=ctx.createRadialGradient(170,50,0,170,50,40);const ca=clamp((p-0.1)*3,0,1);cg.addColorStop(0,`rgba(255,150,0,${ca})`);cg.addColorStop(0.4,`rgba(255,50,0,${ca*0.5})`);cg.addColorStop(1,'rgba(255,0,0,0)');ctx.fillStyle=cg;ctx.beginPath();ctx.ellipse(170,52,40,20,0,0,Math.PI*2);ctx.fill();}if(p>0.05){const sa=clamp(p*4,0,0.7);const sc=p>0.4?`rgba(200,80,0,${sa})`:`rgba(80,80,80,${sa})`;const t=Date.now()/2500;[[-8,0],[3,-18],[-5,-34],[8,-48],[-3,-60]].forEach(([ox,oy],i)=>{const dr=Math.sin(t+i*0.8)*6,r=10+i*5;ctx.beginPath();ctx.arc(170+ox+dr,38+oy,r,0,Math.PI*2);ctx.fillStyle=sc;ctx.fill();});}if(p>0.25){const la=clamp((p-0.25)*2.5,0,1);[[148,100,115,200,85,255],[138,110,105,190,75,255]].forEach(([x1,y1,x2,y2,x3,y3],i)=>{const lg=ctx.createLinearGradient(x1,y1,x3,y3);lg.addColorStop(0,`rgba(255,150,0,${la})`);lg.addColorStop(0.5,`rgba(255,60,0,${la*0.7})`);lg.addColorStop(1,`rgba(150,20,0,${la*0.2})`);ctx.strokeStyle=lg;ctx.lineWidth=3+i;ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(x2,y2,x3,y3);ctx.stroke();});[[192,100,225,200,255,255],[202,110,235,190,265,255]].forEach(([x1,y1,x2,y2,x3,y3],i)=>{const lg=ctx.createLinearGradient(x1,y1,x3,y3);lg.addColorStop(0,`rgba(255,150,0,${la})`);lg.addColorStop(0.5,`rgba(255,60,0,${la*0.7})`);lg.addColorStop(1,`rgba(150,20,0,${la*0.2})`);ctx.strokeStyle=lg;ctx.lineWidth=3+i;ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(x2,y2,x3,y3);ctx.stroke();});}if(p>0.5){particles.forEach(pt=>{ctx.beginPath();ctx.arc(pt.x,pt.y,pt.r,0,Math.PI*2);ctx.fillStyle=`rgba(${pt.color},${pt.opacity})`;ctx.fill();});}if(p>=1){ctx.font='bold 14px monospace';ctx.fillStyle='#FF6B00';ctx.textAlign='center';ctx.fillText('🌋 $VLK ERUPTION 🌋',170,22);}}
+  function updateParticles(){const p=clicks/MAX;if(p>0.5&&Math.random()<p*0.4){particles.push({x:170+(Math.random()-0.5)*15,y:45,vx:(Math.random()-0.5)*5,vy:-Math.random()*8-3,r:Math.random()*5+1,opacity:1,color:Math.random()>0.5?'255,107,0':'255,51,0',gravity:0.12});}particles=particles.filter(pt=>pt.opacity>0.05&&pt.y<300&&pt.y>0);particles.forEach(pt=>{pt.x+=pt.vx;pt.y+=pt.vy;pt.vy+=pt.gravity;pt.vx*=0.99;pt.opacity-=0.018;});}
   function animate(){updateParticles();drawScene();requestAnimationFrame(animate);}
-
-  function updateUI(){
-    const p=clamp(clicks/MAX,0,1);
-    document.getElementById('vcnt').textContent=clicks.toLocaleString('fr-FR');
-    document.getElementById('vpf').style.width=(p*100).toFixed(1)+'%';
-    const btn=document.getElementById('vBtn');
-    const lbl=document.getElementById('vStage');
-    if(p===0){lbl.textContent='The volcano sleeps...';btn.textContent='ACTIVATE 🌋';btn.style.background='#FF6B00';}
-    else if(p<0.1){lbl.textContent='The heat is rising...';btn.textContent='HEAT UP 🔥';}
-    else if(p<0.25){lbl.textContent='Snow melts, smoke appears...';btn.textContent='CONTINUE 💨';}
-    else if(p<0.4){lbl.textContent='Lava flows down the slopes!';btn.textContent='LAVA FLOWS 🌋';btn.style.background='#FF5500';}
-    else if(p<0.6){lbl.textContent='Eruption imminent!';btn.textContent='ERUPTION! 💥';btn.style.background='#FF4400';}
-    else if(p<0.8){lbl.textContent='The volcano explodes!';btn.textContent='EXPLOSION 🔥🌋';btn.style.background='#FF3300';}
-    else if(p<1){lbl.textContent='MEGA ERUPTION!';btn.textContent='🌋 MEGA ERUPTION 🌋';btn.style.background='#FF2200';}
-    else{lbl.textContent='🌋 TOTAL ERUPTION — $VLK TO THE MOON 🚀';btn.textContent='🌋 TOTAL ERUPTION 🌋';btn.style.background='#FF0000';}
-  }
-
-  // JSONBin counter
-  const BIN_ID = "69bc4442c3097a1dd53e385a";
-  const API_KEY = "$2a$10$7nF6rPcoDMHdt0nFTv6Da.PyAd98fPi3WDxcrdo.slQLnLD12w8xy";
-  const BIN_URL = "https://api.jsonbin.io/v3/b/" + BIN_ID;
-  let pendingClicks = 0; let isSaving = false;
-
-  async function loadClicks(){
-    try{
-      const res=await fetch(BIN_URL+"/latest",{headers:{"X-Master-Key":API_KEY}});
-      const data=await res.json();
-      if(data.record&&data.record.clicks){clicks=Math.min(data.record.clicks,MAX);updateUI();}
-    }catch(e){}
-  }
-
-  async function saveClick(){
-    pendingClicks++;
-    if(isSaving)return;
-    isSaving=true;
-    setTimeout(async()=>{
-      try{
-        const res=await fetch(BIN_URL+"/latest",{headers:{"X-Master-Key":API_KEY}});
-        const data=await res.json();
-        const current=data.record?data.record.clicks:0;
-        await fetch(BIN_URL,{method:"PUT",headers:{"Content-Type":"application/json","X-Master-Key":API_KEY},body:JSON.stringify({clicks:current+pendingClicks})});
-        pendingClicks=0;
-      }catch(e){}
-      isSaving=false;
-    },2000);
-  }
-
+  function updateUI(){const p=clamp(clicks/MAX,0,1);document.getElementById('vcnt').textContent=clicks.toLocaleString('fr-FR');document.getElementById('vpf').style.width=(p*100).toFixed(1)+'%';const btn=document.getElementById('vBtn');const lbl=document.getElementById('vStage');if(p===0){lbl.textContent='The volcano sleeps...';btn.textContent='ACTIVATE 🌋';btn.style.background='#FF6B00';}else if(p<0.1){lbl.textContent='The heat is rising...';btn.textContent='HEAT UP 🔥';}else if(p<0.25){lbl.textContent='Snow melts, smoke appears...';btn.textContent='CONTINUE 💨';}else if(p<0.4){lbl.textContent='Lava flows down the slopes!';btn.textContent='LAVA FLOWS 🌋';btn.style.background='#FF5500';}else if(p<0.6){lbl.textContent='Eruption imminent!';btn.textContent='ERUPTION! 💥';btn.style.background='#FF4400';}else if(p<0.8){lbl.textContent='The volcano explodes!';btn.textContent='EXPLOSION 🔥🌋';btn.style.background='#FF3300';}else if(p<1){lbl.textContent='MEGA ERUPTION!';btn.textContent='🌋 MEGA ERUPTION 🌋';btn.style.background='#FF2200';}else{lbl.textContent='🌋 TOTAL ERUPTION — $VLK TO THE MOON 🚀';btn.textContent='🌋 TOTAL ERUPTION 🌋';btn.style.background='#FF0000';}}
+  const BIN_ID="69bc4442c3097a1dd53e385a";const API_KEY="$2a$10$7nF6rPcoDMHdt0nFTv6Da.PyAd98fPi3WDxcrdo.slQLnLD12w8xy";const BIN_URL="https://api.jsonbin.io/v3/b/"+BIN_ID;let pendingClicks=0;let isSaving=false;
+  async function loadClicks(){try{const res=await fetch(BIN_URL+"/latest",{headers:{"X-Master-Key":API_KEY}});const data=await res.json();if(data.record&&data.record.clicks){clicks=Math.min(data.record.clicks,MAX);updateUI();}}catch(e){}}
+  async function saveClick(){pendingClicks++;if(isSaving)return;isSaving=true;setTimeout(async()=>{try{const res=await fetch(BIN_URL+"/latest",{headers:{"X-Master-Key":API_KEY}});const data=await res.json();const current=data.record?data.record.clicks:0;await fetch(BIN_URL,{method:"PUT",headers:{"Content-Type":"application/json","X-Master-Key":API_KEY},body:JSON.stringify({clicks:current+pendingClicks})});pendingClicks=0;}catch(e){}isSaving=false;},2000);}
   function doClick(){if(clicks>=MAX)return;clicks++;updateUI();saveClick();}
-  animate(); updateUI(); loadClicks();
+  animate();updateUI();loadClicks();
 </script>
 </body>
 </html>
