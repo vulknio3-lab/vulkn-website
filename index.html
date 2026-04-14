@@ -18,7 +18,7 @@
     .cursor { width: 8px; height: 8px; background: var(--lava); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.1s; mix-blend-mode: difference; }
     .cursor-ring { width: 32px; height: 32px; border: 1px solid var(--lava); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: all 0.15s ease; opacity: 0.5; }
     body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; mix-blend-mode: normal; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; }
     nav::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(13,13,13,0.9), transparent); z-index: -1; pointer-events: none; }
     .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 6px; color: var(--white); }
     .nav-logo span { color: var(--lava); }
@@ -94,15 +94,130 @@
     .safu-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; color: var(--white); margin-bottom: 12px; }
     .safu-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
 
+    /* ===== TRADING BOT SECTION ===== */
+    #tradingbot { background: var(--smoke); position: relative; overflow: hidden; }
+    #tradingbot::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,107,0,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .bot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .bot-visual { position: relative; }
+    .bot-screen {
+      background: var(--ash);
+      border: 1px solid rgba(255,107,0,0.2);
+      border-radius: 4px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .bot-screen::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--fire), var(--gold), var(--lava));
+    }
+    .bot-screen-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,107,0,0.1);
+    }
+    .bot-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .bot-dot.red { background: #ff5f57; }
+    .bot-dot.yellow { background: #febc2e; }
+    .bot-dot.green { background: #28c840; }
+    .bot-screen-title { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-left: 8px; }
+    .bot-line { font-size: 13px; font-family: 'DM Sans', monospace; line-height: 2; }
+    .bot-line .label { color: var(--muted); }
+    .bot-line .val { color: var(--white); font-weight: 500; }
+    .bot-line .val.green { color: #28c840; }
+    .bot-line .val.lava { color: var(--lava); }
+    .bot-line .val.gold { color: var(--gold); }
+    .bot-cycle {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,107,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .cycle-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+    .cycle-icon { font-size: 22px; }
+    .cycle-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-align: center; }
+    .cycle-arrow { color: var(--lava); font-size: 18px; opacity: 0.5; }
+    .bot-text h3 { font-family: 'Bebas Neue', sans-serif; font-size: 52px; line-height: 0.9; margin-bottom: 32px; }
+    .bot-text h3 span { color: var(--lava); }
+    .bot-text p { font-size: 15px; line-height: 1.9; color: var(--muted); margin-bottom: 20px; }
+    .bot-text p strong { color: var(--white); font-weight: 500; }
+    .bot-features { display: flex; flex-direction: column; gap: 0; margin-top: 40px; }
+    .bot-feature { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid rgba(245,240,235,0.06); align-items: flex-start; }
+    .bot-feature:last-child { border-bottom: none; }
+    .bot-feature-icon { font-size: 20px; min-width: 28px; }
+    .bot-feature-body h5 { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 4px; letter-spacing: 1px; text-transform: uppercase; }
+    .bot-feature-body p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .bot-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,107,0,0.08);
+      border: 1px solid rgba(255,107,0,0.25);
+      padding: 6px 16px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--lava);
+      margin-bottom: 24px;
+    }
+    .bot-badge::before { content: ''; width: 6px; height: 6px; background: var(--lava); border-radius: 50%; animation: blink 1.5s infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    /* BURN COUNTER WIDGET */
+    .burn-widget {
+      background: var(--ash);
+      border: 1px solid rgba(255,107,0,0.15);
+      padding: 32px;
+      margin-top: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .burn-widget::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--lava), transparent);
+    }
+    .burn-widget-title { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .burn-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .burn-stat { text-align: center; }
+    .burn-num { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--lava); line-height: 1; margin-bottom: 4px; }
+    .burn-lbl { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
     /* ROADMAP */
     .road-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; position: relative; }
     .road-grid-row2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 2px; }
+    .road-grid-row3 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 2px; }
     .road-card { padding: 48px 32px; background: var(--ash); position: relative; }
     .road-card.active { background: var(--smoke); border-top: 2px solid var(--lava); }
     .road-card.future { background: var(--smoke); border-top: 2px solid rgba(255,107,0,0.3); overflow: hidden; }
     .road-card.future::before { content: 'COMING SOON'; position: absolute; top: 14px; right: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 10px; letter-spacing: 3px; color: var(--lava); opacity: 0.45; border: 1px solid rgba(255,107,0,0.2); padding: 2px 8px; }
     .road-card.future .road-q { color: rgba(255,107,0,0.55); }
     .road-card.future .road-items li { opacity: 0.65; }
+    .road-card.bot-phase { background: var(--smoke); border-top: 2px solid var(--lava); overflow: hidden; }
+    .road-card.bot-phase::before { content: 'TRADING BOT'; position: absolute; top: 14px; right: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 10px; letter-spacing: 3px; color: var(--lava); opacity: 0.7; border: 1px solid rgba(255,107,0,0.3); padding: 2px 8px; }
     .road-q { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--lava); margin-bottom: 24px; display: block; }
     .road-items { list-style: none; display: flex; flex-direction: column; gap: 12px; }
     .road-items li { font-size: 13px; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
@@ -136,7 +251,9 @@
       section { padding: 80px 24px; } #about { grid-template-columns: 1fr; gap: 60px; }
       .toko-grid { grid-template-columns: 1fr 1fr; } #launch { grid-template-columns: 1fr; gap: 60px; }
       .safu-grid { grid-template-columns: 1fr; } .road-grid { grid-template-columns: 1fr 1fr; }
-      .road-grid-row2 { grid-template-columns: 1fr; }
+      .road-grid-row2 { grid-template-columns: 1fr; } .road-grid-row3 { grid-template-columns: 1fr; }
+      .bot-grid { grid-template-columns: 1fr; gap: 48px; }
+      .burn-stats { grid-template-columns: 1fr 1fr 1fr; }
       footer { padding: 60px 24px 40px; } .footer-top { flex-direction: column; gap: 40px; }
       .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
     }
@@ -152,7 +269,7 @@
   <ul class="nav-links">
     <a href="#about">About</a>
     <a href="#tokenomics">Tokenomics</a>
-    <a href="#launch">Launch</a>
+    <a href="#tradingbot">Trading Bot</a>
     <a href="#roadmap">Roadmap</a>
     <a href="#chart">Chart</a>
     <a href="https://t.me/VulknSOL" target="_blank" class="nav-cta">Telegram</a>
@@ -170,7 +287,7 @@
   </h1>
   <div class="hero-bottom">
     <p class="hero-desc fade-up fade-up-3">
-      The AI Shield of Solana. A deflationary token with real utility — protecting crypto investors from scams and rug pulls. Fair launch. No team wallet. Liquidity burned.
+      The AI Shield of Solana. A deflationary token with real utility — protecting crypto investors from scams and rug pulls. Trading bot profits fuel buybacks & burns. Fair launch. No team wallet. Liquidity burned.
     </p>
     <div class="hero-actions fade-up fade-up-4">
       <a href="https://pump.fun/coin/43W8ZzrrmCNmyn9AAkrg5bNA11pC1p8iAbTajcdGpump" target="_blank" class="btn-main" id="buy-btn">Buy $VLK on Pump.fun 🌋</a>
@@ -185,7 +302,8 @@
   <div class="ticker-track">
     <div class="ticker-item">VULKN <span>$VLK</span></div>
     <div class="ticker-item">Fair Launch <span>✦</span></div>
-    <div class="ticker-item">Liquidity Burned <span>✦</span></div>
+    <div class="ticker-item">Trading Bot <span>✦</span></div>
+    <div class="ticker-item">Buyback & Burn <span>🔥</span></div>
     <div class="ticker-item">AI Shield of Solana <span>✦</span></div>
     <div class="ticker-item">Formations E-Commerce <span>✦</span></div>
     <div class="ticker-item">Boutique VULKN <span>✦</span></div>
@@ -193,7 +311,8 @@
     <div class="ticker-item">No Rug <span>✦</span></div>
     <div class="ticker-item">VULKN <span>$VLK</span></div>
     <div class="ticker-item">Fair Launch <span>✦</span></div>
-    <div class="ticker-item">Liquidity Burned <span>✦</span></div>
+    <div class="ticker-item">Trading Bot <span>✦</span></div>
+    <div class="ticker-item">Buyback & Burn <span>🔥</span></div>
     <div class="ticker-item">AI Shield of Solana <span>✦</span></div>
     <div class="ticker-item">Formations E-Commerce <span>✦</span></div>
     <div class="ticker-item">Boutique VULKN <span>✦</span></div>
@@ -225,7 +344,7 @@
     <h2 class="section-title">What is<br/>VULKN?</h2>
     <p>VULKN is not just another token. It's a <strong>movement</strong> — a community-driven project built on Solana with a real mission: protecting crypto investors from scams, rug pulls, and bad projects.</p>
     <p>Launched <strong>fair on Pump.fun</strong>, with no team wallet, no pre-sale advantage, and liquidity burned at 69 SOL. What you see is what you get.</p>
-    <p>Our long-term vision is to build the <strong>AI Shield of Solana</strong> — a suite of tools powered by artificial intelligence that helps every investor make safer, smarter decisions.</p>
+    <p>Our long-term vision is to build the <strong>AI Shield of Solana</strong> — a suite of tools powered by artificial intelligence that helps every investor make safer, smarter decisions. A trading bot generates profits that are reinvested directly into <strong>$VLK buybacks and burns</strong>, making the supply deflationary over time.</p>
   </div>
   <div class="about-stats">
     <div class="stat-box"><div class="stat-num">1<span>B</span></div><div class="stat-label">Total Supply</div></div>
@@ -243,7 +362,105 @@
     <div class="toko-card" data-pct="100"><div class="toko-pct">100%</div><div class="toko-name">Fair Launch</div><div class="toko-amount">1,000,000,000 $VLK</div><div class="toko-detail">All tokens on Pump.fun</div></div>
     <div class="toko-card" data-pct="0"><div class="toko-pct">0%</div><div class="toko-name">Team Wallet</div><div class="toko-amount">No allocation</div><div class="toko-detail">No insider advantage</div></div>
     <div class="toko-card" data-pct="∞"><div class="toko-pct">∞</div><div class="toko-name">Liquidity Lock</div><div class="toko-amount">Burned at 69 SOL</div><div class="toko-detail">Permanent — forever</div></div>
-    <div class="toko-card" data-pct="69"><div class="toko-pct">69</div><div class="toko-name">SOL Target</div><div class="toko-amount">Raydium listing</div><div class="toko-detail">Auto-migration</div></div>
+    <div class="toko-card" data-pct="🔥"><div class="toko-pct">🔥</div><div class="toko-name">Buyback & Burn</div><div class="toko-amount">Trading bot profits</div><div class="toko-detail">100% reinvested in $VLK</div></div>
+  </div>
+</section>
+
+<!-- TRADING BOT SECTION -->
+<section id="tradingbot">
+  <div class="bot-grid">
+    <div class="bot-visual">
+      <div class="bot-screen">
+        <div class="bot-screen-header">
+          <div class="bot-dot red"></div>
+          <div class="bot-dot yellow"></div>
+          <div class="bot-dot green"></div>
+          <span class="bot-screen-title">VULKN Trading Bot — Live</span>
+        </div>
+        <div class="bot-line"><span class="label">Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="val green">● ACTIVE</span></div>
+        <div class="bot-line"><span class="label">Strategy&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="val">DCA + Trend Following</span></div>
+        <div class="bot-line"><span class="label">Network&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="val">Solana / Jupiter</span></div>
+        <div class="bot-line"><span class="label">Profits&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="val lava">→ 100% Buyback $VLK</span></div>
+        <div class="bot-line"><span class="label">Buyback&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="val gold">→ 100% Burned 🔥</span></div>
+
+        <div class="bot-cycle">
+          <div class="cycle-step">
+            <div class="cycle-icon">🤖</div>
+            <div class="cycle-label">Bot Trades</div>
+          </div>
+          <div class="cycle-arrow">→</div>
+          <div class="cycle-step">
+            <div class="cycle-icon">💰</div>
+            <div class="cycle-label">Profits</div>
+          </div>
+          <div class="cycle-arrow">→</div>
+          <div class="cycle-step">
+            <div class="cycle-icon">📈</div>
+            <div class="cycle-label">Buy $VLK</div>
+          </div>
+          <div class="cycle-arrow">→</div>
+          <div class="cycle-step">
+            <div class="cycle-icon">🔥</div>
+            <div class="cycle-label">Burn</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="burn-widget">
+        <div class="burn-widget-title">Deflationary Pressure</div>
+        <div class="burn-stats">
+          <div class="burn-stat">
+            <div class="burn-num">🔥</div>
+            <div class="burn-lbl">Auto Burn</div>
+          </div>
+          <div class="burn-stat">
+            <div class="burn-num">∞</div>
+            <div class="burn-lbl">Continuous</div>
+          </div>
+          <div class="burn-stat">
+            <div class="burn-num">100%</div>
+            <div class="burn-lbl">Reinvested</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bot-text">
+      <div class="bot-badge">Coming Q2 2026</div>
+      <h3>Trading<br/><span>Bot</span><br/>Buyback<br/><span>&amp; Burn</span></h3>
+      <p>VULKN déploie un <strong>robot de trading automatisé</strong> sur Solana. Ce bot analyse les marchés 24h/24, exécute des trades et génère des bénéfices en continu.</p>
+      <p><strong>100% des gains</strong> sont automatiquement réinvestis pour racheter des $VLK sur le marché — puis ces tokens sont définitivement brûlés. Moins d'offre, plus de valeur pour chaque holder.</p>
+      <div class="bot-features">
+        <div class="bot-feature">
+          <div class="bot-feature-icon">⚡</div>
+          <div class="bot-feature-body">
+            <h5>Automatisé 24/7</h5>
+            <p>Le bot tourne en continu sur Solana via Jupiter. Aucune intervention manuelle — les profits s'accumulent et les burns se font automatiquement.</p>
+          </div>
+        </div>
+        <div class="bot-feature">
+          <div class="bot-feature-icon">📉</div>
+          <div class="bot-feature-body">
+            <h5>Pression déflationniste</h5>
+            <p>Chaque buyback réduit l'offre circulante de $VLK. Plus le bot est actif, plus les tokens sont rares — mécaniquement favorable au prix.</p>
+          </div>
+        </div>
+        <div class="bot-feature">
+          <div class="bot-feature-icon">🔍</div>
+          <div class="bot-feature-body">
+            <h5>Transparence totale</h5>
+            <p>Toutes les transactions de buyback et burn seront publiques on-chain. La communauté peut vérifier chaque opération en temps réel sur Solscan.</p>
+          </div>
+        </div>
+        <div class="bot-feature">
+          <div class="bot-feature-icon">🏆</div>
+          <div class="bot-feature-body">
+            <h5>Holders récompensés</h5>
+            <p>Tu n'as rien à faire. Simplement hold $VLK et bénéficier de la rareté croissante créée par le bot chaque jour.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -268,6 +485,7 @@
       <div class="info-row"><span class="info-key">Liquidity</span><span class="info-val highlight">Burned ∞</span></div>
       <div class="info-row"><span class="info-key">Team Wallet</span><span class="info-val">None</span></div>
       <div class="info-row"><span class="info-key">Listing</span><span class="info-val">Raydium Auto</span></div>
+      <div class="info-row"><span class="info-key">Trading Bot</span><span class="info-val highlight">Q2 2026 🤖</span></div>
     </div>
   </div>
 </section>
@@ -288,7 +506,6 @@
   <div class="section-label">Roadmap</div>
   <h2 class="section-title">The<br/>Eruption</h2>
 
-  <!-- Ligne 1 : Q1 → Q3 -->
   <div class="road-grid">
     <div class="road-card active">
       <span class="road-q">Q1 2026</span>
@@ -308,6 +525,19 @@
         <li>AI Telegram bot</li>
       </ul>
     </div>
+    <div class="road-card bot-phase">
+      <span class="road-q">Q2–Q3 2026</span>
+      <ul class="road-items">
+        <li>🤖 Trading bot deployment</li>
+        <li>100% profits → Buyback $VLK</li>
+        <li>100% buybacks → Burned 🔥</li>
+        <li>On-chain burn transparency</li>
+        <li>Deflationary pressure begins</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="road-grid-row2">
     <div class="road-card">
       <span class="road-q">Q3 2026</span>
       <ul class="road-items">
@@ -317,10 +547,6 @@
         <li>CEX targets</li>
       </ul>
     </div>
-  </div>
-
-  <!-- Ligne 2 : Q4 + 2 nouvelles étapes -->
-  <div class="road-grid-row2">
     <div class="road-card">
       <span class="road-q">Q4 2026</span>
       <ul class="road-items">
@@ -330,20 +556,18 @@
         <li>V2 roadmap</li>
       </ul>
     </div>
-
-    <!-- NEW PHASE 1 -->
     <div class="road-card future">
       <span class="road-q">2027 — I</span>
       <ul class="road-items">
-        <li>E-commerce training platform launch</li>
+        <li>E-commerce training platform</li>
         <li>3 levels: Beginner · Intermediate · Expert</li>
         <li>Exclusive payment in $VLK</li>
         <li>$VLK burned on every purchase 🔥</li>
-        <li>Partnerships with e-commerce experts</li>
       </ul>
     </div>
+  </div>
 
-    <!-- NEW PHASE 2 -->
+  <div class="road-grid-row3">
     <div class="road-card future">
       <span class="road-q">2027 — II</span>
       <ul class="road-items">
@@ -352,6 +576,15 @@
         <li>Premium streetwear payable in $VLK</li>
         <li>$VLK burned on every order 🔥</li>
         <li>Exclusive drops for holders</li>
+      </ul>
+    </div>
+    <div class="road-card future">
+      <span class="road-q">2027 — III</span>
+      <ul class="road-items">
+        <li>Trading bot V2 — upgraded strategies</li>
+        <li>Bot profits scale with community growth</li>
+        <li>Accelerated burn rate</li>
+        <li>$VLK supply significantly reduced 🔥</li>
       </ul>
     </div>
   </div>
